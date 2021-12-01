@@ -32,6 +32,11 @@ float4 PS(VertexOutput input) : SV_Target0
     return diffuse * NdotL;
 }
 
+RasterizerState RS
+{
+	FillMode = Wireframe;
+};
+
 // using Direct11
 technique11 T0
 {
@@ -40,4 +45,11 @@ technique11 T0
         SetVertexShader(CompileShader(vs_5_0, VS()));
         SetPixelShader(CompileShader(ps_5_0, PS()));
     }
+
+	pass P1
+	{
+		SetRasterizerState(RS);
+		SetVertexShader(CompileShader(vs_5_0, VS()));
+		SetPixelShader(CompileShader(ps_5_0, PS()));
+	}
 }
