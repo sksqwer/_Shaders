@@ -1,19 +1,19 @@
-cbuffer CB_PreFrame
+cbuffer CB_PerFrame
 {
-    matrix View;
-    matrix ViewInverse;
-    matrix Projection;
-    matrix VP;
+    matrix View; 
+    matrix ViewInverse; 
+    matrix Projection; 
+    matrix VP; 
     
-    float Time;
+    float Time; 
 };
 
 cbuffer CB_World
 {
-    matrix World;
+    matrix World; 
 };
 
-float3 LightDirection;
+//float3 LightDirection; 
 
 Texture2D DiffuseMap;
 Texture2D SpecularMap;
@@ -23,10 +23,10 @@ SamplerState Sampler;
 
 SamplerState LinearSampler
 {
-    Filter = MIN_MAG_MIP_LINEAR;
+    Filter = MIN_MAG_MIP_LINEAR; 
     AddressU = WRAP;
     AddressV = WRAP;
-};
+}; 
 
 
 struct Vertex
@@ -52,9 +52,6 @@ struct VertexColorNormal
     float4 Color : COLOR0;
     float3 Normal : NORMAL0;
 };
-
-
-
 
 struct VertexTexture
 {
@@ -83,8 +80,6 @@ struct VertexTextureNormal
     float2 Uv : TEXCOORD0;
     float3 Normal : NORMAL0;
 };
-
-
 
 struct VertexColorTextureNormal
 {
@@ -121,7 +116,7 @@ struct VertexTextureNormalTangentBlend
 };
 
 
-/// function
+/// : function
 float4 WorldPosition(float4 position)
 {
     return mul(position, World);
@@ -129,12 +124,14 @@ float4 WorldPosition(float4 position)
 
 float4 ViewProjection(float4 position)
 {
-    position = mul(position, View);
-    return mul(position, Projection);
+    //position = mul(position, View);
+    //return mul(position, Projection);
+    
+    return mul(position, VP);
 }
-
 
 float3 WorldNormal(float3 normal)
 {
     return mul(normal, (float3x3) World);
 }
+
