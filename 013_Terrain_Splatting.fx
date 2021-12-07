@@ -2,8 +2,6 @@
 #include "000_Light.fx"
 #include "000_Terrain.fx"
 
-Texture2D BaseMap;
-
 struct VertexOutput
 {
     float4 Position : SV_Position0;
@@ -29,13 +27,13 @@ float4 PS(VertexOutput input) : SV_Target0
 {
     //return float4(input.Normal * 0.5f + 0.5f, 1); 
     
-    float4 diffuse = BaseMap.Sample(LinearSampler, input.Uv);
+    float4 diffuse = GetTerrainColor(input.Uv);
     float3 normal = normalize(input.Normal);
     float NdotL = saturate(dot(normal, -GlobalLight.Direction));
-    float3 gridColor = GetLineColor(input.wPosition.xyz);
+    //float3 gridColor = GetLineColor(input.wPosition.xyz);
     
     //return float4(gridColor, 1);
-    return diffuse * NdotL + float4(gridColor, 1);
+    return diffuse * NdotL;
 }
 
 RasterizerState RS
